@@ -1,12 +1,12 @@
-import {useEffect, useState, useMemo, useContext} from "react";
-import {LayoutContext} from "@/layout/context/layoutcontext";
-import {baseUrl} from "@/app/utilis/webinfo";
+import { baseUrl } from "@/app/utilis/webinfo";
+import { LayoutContext } from "@/layout/context/layoutcontext";
+import { useContext, useEffect, useMemo, useState } from "react";
 
 export const useFetch = (
     endpoint: string,
     dependencies: any[] = [],
     condition: boolean = false,
-    id: any = "",
+    id: any = ""
 ) => {
     const [loading, setLoading] = useState<boolean>(false);
     const [error, setError] = useState<string>("");
@@ -14,7 +14,8 @@ export const useFetch = (
     const [totalData, setTotalData] = useState<number>(0);
     // const [approvalLevel, setApprovalLevel] = useState(null)
     const [notFound, setNotfound] = useState(false);
-    const {accessToken} = useContext(LayoutContext);
+    const [reloadFlag, setReloadFlag] = useState(0);
+    const { accessToken } = useContext(LayoutContext);
 
     const memoizedFetchData = useMemo(() => {
         let count = 0;
@@ -40,7 +41,7 @@ export const useFetch = (
                     headers: {
                         Authorization: `Bearer ${accessToken}`,
                     },
-                }, );
+                });
 
                 if (res.status === 204) {
                     setNotfound(true);
@@ -60,8 +61,7 @@ export const useFetch = (
                 setLoading(false);
             }
         };
-
-    }, [endpoint, condition, id, accessToken, ...dependencies]);
+    }, [endpoint, condition, id, accessToken, ...dependencies, reloadFlag]);
 
     useEffect(() => {
         const getData = async () => {
@@ -76,5 +76,8 @@ export const useFetch = (
         getData().then();
     }, [memoizedFetchData]);
 
-    return { loading, error, data, setData, totalData, notFound};
+    // Add refetch function
+    const refetch = () => setReloadFlag((f) => f + 1);
+
+    return { loading, error, data, setData, totalData, notFound, refetch };
 };

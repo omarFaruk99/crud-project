@@ -15,7 +15,7 @@ const HomePage = () => {
     const toast = useRef<Toast>(null);
     const { accessToken } = useContext(LayoutContext);
 
-    const { data } = useFetch(
+    const { data, refetch } = useFetch(
         "/api/food_ingredient_inventory_trace?page=0&size=10&sort=-id"
     );
 
@@ -74,6 +74,7 @@ const HomePage = () => {
             );
             if (!res.ok) throw new Error("Failed to submit");
             setVisible(false);
+            refetch(); // Refresh data after create
         } catch (err: any) {
             setError(err.message || "Error");
         } finally {
@@ -119,6 +120,7 @@ const HomePage = () => {
             );
             if (!res.ok) throw new Error("Failed to update");
             setEditVisible(false);
+            refetch(); // Refresh data after update
         } catch (err: any) {
             setEditError(err.message || "Error");
         } finally {
@@ -143,14 +145,13 @@ const HomePage = () => {
                 }
             );
             if (!res.ok) throw new Error("Failed to delete");
-            // Optionally show toast
             if (toast.current)
                 toast.current.show({
                     severity: "success",
                     summary: "Deleted",
                     detail: "Item deleted",
                 });
-            // Optionally refetch or update UI
+            refetch(); // Refresh data after delete
         } catch (err: any) {
             setError(err.message || "Error");
         } finally {
