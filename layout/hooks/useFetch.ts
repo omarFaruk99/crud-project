@@ -70,7 +70,7 @@ export const useFetch = (
             if (processedData?.total_count) {
                 setTotalData(processedData.total_count);
             }
-            setData(processedData?.data);
+            setData(processedData?.data?.items);
         };
 
         getData().then();

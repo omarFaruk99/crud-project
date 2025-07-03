@@ -7,7 +7,7 @@ import type {
     LayoutState,
 } from "@/types";
 import Head from "next/head";
-import React, {useEffect, useState} from "react";
+import React, { useState } from "react";
 
 export const LayoutContext = React.createContext({} as LayoutContextProps);
 
@@ -23,7 +23,9 @@ export const LayoutProvider = (props: ChildContainerProps) => {
         scale: 14,
     });
 
-    const [accessToken, setAccessToken] = useState<string>("")
+    const [accessToken, setAccessToken] = useState<string>(
+        "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiMSIsInVzZXJuYW1lIjoiYWRtaW5AYWRtaW4uY29tIiwicm9sZXMiOlsiQWRtaW4iXSwiaWF0IjoxNzUxNTE1NzA0LCJleHAiOjE3NTY2OTk3MDQsImp0aSI6IjBhZTFhYjkxLWQxOWYtNDIzOC1hMDhiLTM5YTk4NTI3ODhiNSJ9.Y_tH9oEINvIWXkZo_oe2A-bZKdj7gjBfRxT7fAdnaT6FAN7uraNeXfqEv4MmfYIE2qh7A3Nmweg1BYzfNU0E8IinLcbbr0p9n9_HfIFkRVRNJe7vqVjCePOwZgZjWh3_AFMUoNbhJi4INScYG458Z0nOE1U-qztuqy_3Kw3MqGMzjzsrHRwVx1gUyR9pk04knTI_suUggSA0x0kQnTveqJaj_omvpKkBomGUq8EqigSjA_uUOdwn46ZHykTDiXL4wjb-hMcjxKBNADVCo8bnfp4MuZ2_HTnjz3vjVtDX217u-_fEQfL0c6ADp07jtxoG13VDt7uYIbcVYLtr_NuVFQ"
+    );
     const [layoutState, setLayoutState] = useState<LayoutState>({
         staticMenuDesktopInactive: false,
         overlayMenuActive: false,
@@ -108,7 +110,7 @@ export const LayoutProvider = (props: ChildContainerProps) => {
         breadcrumbs,
         setBreadcrumbs,
         accessToken,
-        setAccessToken
+        setAccessToken,
     };
 
     return (
@@ -116,12 +118,12 @@ export const LayoutProvider = (props: ChildContainerProps) => {
             <>
                 <Head>
                     <title>Boilerplate</title>
-                    <meta charSet="UTF-8"/>
+                    <meta charSet="UTF-8" />
                     <meta
                         name="description"
                         content="The ultimate collection of design-agnostic, flexible and accessible React UI Components."
                     />
-                    <meta name="robots" content="index, follow"/>
+                    <meta name="robots" content="index, follow" />
                     <meta
                         name="viewport"
                         content="initial-scale=1, width=device-width"
